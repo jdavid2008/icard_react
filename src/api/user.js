@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export const loginApi = async ( formValue ) => {
@@ -69,3 +70,24 @@ export const getUsersApi = async (token) => {
         throw error
     }
 }
+
+
+export async function addUserApi(data, token) {
+    try {
+      const url = `${apiUrl}/api/users/`;
+      const params = {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+  
+      const response = await fetch(url, params);
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
