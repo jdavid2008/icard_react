@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Modal } from "semantic-ui-react";
 import "./ModalBasic.scss";
 

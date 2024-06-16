@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Form, Button, Checkbox } from "semantic-ui-react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -5,16 +6,17 @@ import { useUser } from "../../../../hooks";
 import "./AddEditUserForm.scss";
 
 export function AddEditUserForm(props) {
-  const { onClose, onRefetch } = props;
-  const { addUser } = useUser();
+  const { onClose, onRefetch, user } = props;
+  const { addUser, updateUser } = useUser();
 
   const formik = useFormik({
-    initialValues: initialValues(),
-    validationSchema: Yup.object(newSchame()),
+    initialValues: initialValues( user ),
+    validationSchema: Yup.object( user? updateSchame() : newSchame()),
     validateOnChange: false,
     onSubmit: async (formValue) => {
       try {
-        await addUser(formValue);
+        if (user) await updateUser(user.id ,formValue)
+        else await addUser(formValue);
 
         onRefetch();
         onClose();
@@ -87,21 +89,21 @@ export function AddEditUserForm(props) {
         type="submit"
         primary
         fluid
-        content={"Crear"}
+        content={ user ? "Actualziar" : "Crear"}
       />
     </Form>
   );
 }
 
-function initialValues() {
+function initialValues( data ) {
   return {
-    username: "",
-    email: "",
-    first_name: "",
-    last_name: "",
+    username: data?.username || "",
+    email: data?.email || "",
+    first_name: data?.first_name || "",
+    last_name: data?.lastname_name || "",
     password: "",
-    is_active: true,
-    is_staff: false,
+    is_active: data?.is_active ? true: false,
+    is_staff: data?.is_staff ? true: false,
   };
 }
 
@@ -116,3 +118,17 @@ function newSchame() {
     is_staff: Yup.bool().required(true),
   };
 }
+
+
+function updateSchame() {
+  return {
+    username: Yup.string().required(true),
+    email: Yup.string().email(true).required(true),
+    first_name: Yup.string(),
+    last_name: Yup.string(),
+    password: Yup.string(),
+    is_active: Yup.bool().required(true),
+    is_staff: Yup.bool().required(true),
+  };
+}
+

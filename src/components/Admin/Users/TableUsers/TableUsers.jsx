@@ -1,11 +1,10 @@
-import React from "react";
+/* eslint-disable react/prop-types */
 import { Table, Button, Icon } from "semantic-ui-react";
 import { map } from "lodash";
 import "./TableUsers.scss";
 
-export function TableUsers(props) {
-  const { users, updateUser, onDeleteUser } = props;
-
+export function TableUsers({ users, updateUser, onDeleteUser  }) {
+  
   return (
     <Table className="table-users-admin">
       <Table.Header>
@@ -46,9 +45,8 @@ export function TableUsers(props) {
   );
 }
 
-function Actions(props) {
-  const { user, updateUser, onDeleteUser } = props;
-
+function Actions({ user, updateUser ,onDeleteUser }) {
+  
   return (
     <Table.Cell textAlign="right">
       <Button icon onClick={() => updateUser(user)}>

@@ -91,3 +91,44 @@ export async function addUserApi(data, token) {
       throw error;
     }
   }
+
+  export async function updateUserApi(id, data, token) {
+    try {
+        const url = `${apiUrl}/api/users/${id}/`;
+        const params = {
+            method: "PATCH",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          };
+      
+          const response = await fetch(url, params);
+          const result = await response.json();
+          return result;
+
+    } catch (error) {
+        throw error;
+    }
+  }
+
+  export async function deleteUserApi(id, token) {
+    try {
+        const url = `${apiUrl}/api/users/${id}/`;
+        const params = {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          };
+      
+          const response = await fetch(url, params);
+          const result = await response.json();
+          return result;
+
+    } catch (error) {
+        throw error;
+    }
+  }

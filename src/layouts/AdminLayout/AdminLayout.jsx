@@ -1,14 +1,13 @@
-import React, {useContext} from 'react';
+import {useContext} from 'react';
 import { LoginAdmin } from '../../pages/Admin'
 import { AuthContext } from '../../context';
 import { TopMenu,SideMenu } from '../../components/Admin';
 
 import "./AdminLayout.scss";
 
-export function AdminLayout( {children} ) {
+export const  AdminLayout = ( { children } ) =>  {
   const { auth } = useContext(AuthContext)
 
-  console.log('Cargando Layout Admin...',auth)
   
   if (!auth) return <LoginAdmin/>
 
